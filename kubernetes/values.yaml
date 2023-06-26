@@ -1,0 +1,82 @@
+# General
+serviceName: dummy-service
+version: 0.0.1
+environment: prod
+namespace: default # NO CAMBIAR - PROBLEMAS CON "Secrets Store CSI drive" & "AWS provider for the Secrets Store CSI Driver"
+lang: java
+
+# Deployment
+replicaCount: 3
+image:
+  repository: nginx
+  pullPolicy: Always
+  tag: 1.22
+port: 80
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Pod
+podAnnotations: {
+  "linkerd.io/inject": "enabled"
+}
+imagePullSecrets: regcred
+
+# HPA
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  # targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Service
+service:
+  protocol: http # http | grpc
+  type: ClusterIP
+  port: 80
+
+# ingress
+ingress:
+  enabled: false
+  className: ""
+  labels: {}
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+# Service Account
+serviceAccount:
+  create: true
+  annotations: {}
+
+# Canary
+canary:
+  enabled: true
+  skipAnalysis: false
+  analysis:
+    interval: 30s
+    stepWeight: 50
+    maxWeight: 100
+    threshold: 2
+
+# AWS Secrets to add
+secrets: []
+
+# Environment varaibles (not secrets)
+env_vars: {
+  "EXAMPLE": "my_example"
+}
