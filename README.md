@@ -1,26 +1,28 @@
 # react-native-components-bryan
 
-NPS Super App
+React Native Components library
 
 ## Installation
 
-```sh
-npm install react-native-components-bryan
+```
+1- In the root yarn install
+
+2- cd example yarn install
+
+3- cd .. -> cd example/ios -> pod install -> yarn ios
+
+4- for android cd example -> yarn android
 ```
 
 ## Usage
 
 ```js
-import { multiply } from 'react-native-components-bryan';
+import { Component } from 'react-native-components-bryan';
 
-// ...
+// And then use the component
 
-const result = await multiply(3, 7);
+<Component />;
 ```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 
